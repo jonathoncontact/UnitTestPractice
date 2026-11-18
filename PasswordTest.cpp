@@ -27,16 +27,27 @@ TEST(PasswordTest, mixed_case_password)
 	ASSERT_TRUE(my_password.has_mixed_case("Password"));
 }
 
+TEST(PasswordTest, empty_password_has_no_leading_characters)
+{
+    Password my_password;
+    ASSERT_EQ(0, my_password.count_leading_characters(""));
+}
 
 TEST(PasswordTest, long_repeating_leading_characters)
 {
-	Password my_password;
-	int actual = my_password.count_leading_characters("AAAAAAAAAABBBBBSx");
-	ASSERT_EQ(0, actual);
+    Password my_password;
+    int actual = my_password.count_leading_characters("AAAAAAAAAABx");
+    ASSERT_EQ(10, actual);
 }
 
-TEST(PasswordTest, has_mixed_case)
+TEST(PasswordTest, lowercase_only_is_not_mixed_case)
 {
-	Password my_password;
-	ASSERT_TRUE(my_password.has_mixed_case("TTesTpw"));
+    Password my_password;
+    ASSERT_FALSE(my_password.has_mixed_case("abc"));
+}
+
+TEST(PasswordTest, uppercase_only_is_not_mixed_case)
+{
+    Password my_password;
+    ASSERT_FALSE(my_password.has_mixed_case("ABC"));
 }
